@@ -27,6 +27,26 @@ var IndecisionApp = function (_React$Component) {
     }
 
     _createClass(IndecisionApp, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var json = localStorage.getItem('options');
+
+            var options = JSON.parse(json);
+            if (options) {
+                this.setState(function () {
+                    return { options: options };
+                });
+            }
+            // console.log(this.state);
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            var json = JSON.stringify(this.state.options);
+            localStorage.setItem('options', json);
+            console.log('save options');
+        }
+    }, {
         key: 'handleDeleteOptions',
         value: function handleDeleteOptions() {
             this.setState(function () {
@@ -162,11 +182,9 @@ var Option = function Option(props) {
         props.optionText,
         React.createElement(
             'button',
-            {
-                onClick: function onClick(e) {
+            { onClick: function onClick(e) {
                     return props.handleDeleteOption(props.optionText);
-                }
-            },
+                } },
             'Remove'
         )
     );
@@ -190,14 +208,15 @@ var AddOption = function (_React$Component2) {
     _createClass(AddOption, [{
         key: 'onFormSubmit',
         value: function onFormSubmit(e) {
-            var _this3 = this;
-
             e.preventDefault();
             var option = e.target.elements.option.value.trim();
+            var error = this.props.handleAddOption(option);
             this.setState(function () {
-                return { error: _this3.props.handleAddOption(option) };
+                return { error: error };
             });
-            e.target.elements.option.value = '';
+            if (!error) {
+                e.target.elements.option.value = '';
+            }
         }
     }, {
         key: 'render',
