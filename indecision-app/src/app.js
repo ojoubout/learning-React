@@ -1,1 +1,3 @@
-console.log('app.js is running');
+import './utils'
+
+console.log('app.js is running!');

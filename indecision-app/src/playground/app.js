@@ -1,3 +1,5 @@
+// const React = require('react');
+// const ReactDOM = require('react-dom');
 class IndecisionApp extends React.Component {
     constructor(props) {
         super(props);
