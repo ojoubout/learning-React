@@ -3,6 +3,7 @@ import AddOption from './AddOption'
 import Options from './Options'
 import Action from './Action'
 import Header from './Header'
+import OptionModal from './OptionModal'
 // import OptionModal from './OptionModal'
 
 class IndecisionApp extends React.Component {
@@ -50,6 +51,10 @@ class IndecisionApp extends React.Component {
         // alert(decisionOption)
         this.setState(() => ({ selectedOption: decisionOption}))
     }
+
+    handleCloseSelectionModal = () => {
+        this.setState(() => ({selectedOption: false}));
+    }
     
 
     render() {
@@ -58,17 +63,25 @@ class IndecisionApp extends React.Component {
         return (
             <div>
                 <Header subtitle={subtitle} />
-                <Action 
-                    handleSelectDecision={this.handleSelectDecision}
-                    hasOptions={this.state.options.length > 0}
-                    options={this.state.options}
+                <div className='container'>
+                    <Action 
+                        handleSelectDecision={this.handleSelectDecision}
+                        hasOptions={this.state.options.length > 0}
+                        options={this.state.options}
+                    />
+                    <div className='widget'>
+                      <Options 
+                          options={this.state.options}
+                          handleDeleteOptions={this.handleDeleteOptions}
+                          handleDeleteOption={this.handleDeleteOption}
+                      />
+                      <AddOption handleAddOption={this.handleAddOption} />
+                    </div>
+                </div>
+                <OptionModal
+                    selectedOption={this.state.selectedOption}
+                    handleCloseSelectionModal={this.handleCloseSelectionModal}
                 />
-                <Options 
-                    options={this.state.options}
-                    handleDeleteOptions={this.handleDeleteOptions}
-                    handleDeleteOption={this.handleDeleteOption}
-                />
-                <AddOption handleAddOption={this.handleAddOption} />
             </div>
         )
     }
